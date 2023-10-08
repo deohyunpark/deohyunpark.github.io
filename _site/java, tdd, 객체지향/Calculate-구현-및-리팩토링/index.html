@@ -1,0 +1,791 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MapStruct - deohyunpark’s weird blog</title>
+<meta name="description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다. 취업을 했어도 역시 공부를 꾸준히 해야되는것같아요. 특히나 백엔드 초격차 강의들은 꿀같은 강의가 너무많아서 듣고 따라하기만 해도 코드의 질이 많이 올라가는것 같습니다. 😍   Test 코드 먼저 작성하기 저는 이 전에 팀 프로젝트, 토이프로젝트를 쫌쫌따리 해봤었지만 테스트 주도 개발을 해본적이없었습니다. TDD 라는 개념도 몰랐었고, 알게 되었다고 해도 이미 저는 냅다 코드를 작성하는 버릇이 생겼었기 때문에 테스트 코드를 먼저 작성하고 테스트하는게 여간 힘든게 아니였습니다. 결론적으로 든 생각은 아주 쉬운것부터 학습하고 따라하다보면 그렇게 어려운게 아니라는 생각이 들었습니다.  물론 서비스, 컨트롤러 층의 테스트 코드 작성하는건 아직도 어렵긴합니다. (특히 시큐리티..)  그런데 이번 강의는 저같이 TEST 코드를 작성하는게 어려운 분들에게 조금이나마 쉽고 까다롭지 않은 방법을 알려주셔서 도움이 많이 되었습니다! 각설하고 시작하겠습니다.">
+
+
+  <meta name="author" content="🌸DEOHYUNPARK🌸">
+  
+  <meta property="article:author" content="🌸DEOHYUNPARK🌸">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="deohyunpark's weird blog">
+<meta property="og:title" content="MapStruct">
+<meta property="og:url" content="http://localhost:4000/java,%20tdd,%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/Calculate-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/">
+
+
+  <meta property="og:description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다. 취업을 했어도 역시 공부를 꾸준히 해야되는것같아요. 특히나 백엔드 초격차 강의들은 꿀같은 강의가 너무많아서 듣고 따라하기만 해도 코드의 질이 많이 올라가는것 같습니다. 😍   Test 코드 먼저 작성하기 저는 이 전에 팀 프로젝트, 토이프로젝트를 쫌쫌따리 해봤었지만 테스트 주도 개발을 해본적이없었습니다. TDD 라는 개념도 몰랐었고, 알게 되었다고 해도 이미 저는 냅다 코드를 작성하는 버릇이 생겼었기 때문에 테스트 코드를 먼저 작성하고 테스트하는게 여간 힘든게 아니였습니다. 결론적으로 든 생각은 아주 쉬운것부터 학습하고 따라하다보면 그렇게 어려운게 아니라는 생각이 들었습니다.  물론 서비스, 컨트롤러 층의 테스트 코드 작성하는건 아직도 어렵긴합니다. (특히 시큐리티..)  그런데 이번 강의는 저같이 TEST 코드를 작성하는게 어려운 분들에게 조금이나마 쉽고 까다롭지 않은 방법을 알려주셔서 도움이 많이 되었습니다! 각설하고 시작하겠습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2023-10-07T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/java,%20tdd,%20%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5/Calculate-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "deohyunpark",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="deohyunpark's weird blog Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+    <!-- start custom head snippets -->
+<meta name="naver-site-verification" content="d884164c2f43b5d7cfca36d514355ee3ab493511" />
+<meta name="NaverBot" content="All"/>
+<meta name="NaverBot" content="index,follow"/>
+<meta name="Yeti" content="All"/>
+<meta name="Yeti" content="index,follow"/>
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!--<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">-->
+<!--<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">-->
+<!--<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">-->
+<!--<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">-->
+<!--<meta name="msapplication-TileColor" content="#da532c">-->
+<!--<meta name="theme-color" content="#ffffff">-->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          HAPPY ENDING IS MINE🥹
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/image/profile/%EC%B2%99%EC%B6%94%EC%88%98%EC%88%A05000%EB%A7%8C%EC%9B%90.png" alt="🌸DEOHYUNPARK🌸" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">🌸DEOHYUNPARK🌸</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p><strong>즐겁게 공부하기😃</strong><br />BACKEND<br />기록의 습관화</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MapStruct">
+    <meta itemprop="description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.취업을 했어도 역시 공부를 꾸준히 해야되는것같아요.특히나 백엔드 초격차 강의들은 꿀같은 강의가 너무많아서 듣고 따라하기만 해도 코드의 질이 많이 올라가는것 같습니다. 😍Test 코드 먼저 작성하기저는 이 전에 팀 프로젝트, 토이프로젝트를 쫌쫌따리 해봤었지만 테스트 주도 개발을 해본적이없었습니다.TDD 라는 개념도 몰랐었고, 알게 되었다고 해도 이미 저는 냅다 코드를 작성하는 버릇이 생겼었기 때문에 테스트 코드를 먼저 작성하고 테스트하는게 여간 힘든게 아니였습니다.결론적으로 든 생각은 아주 쉬운것부터 학습하고 따라하다보면 그렇게 어려운게 아니라는 생각이 들었습니다. 물론 서비스, 컨트롤러 층의 테스트 코드 작성하는건 아직도 어렵긴합니다. (특히 시큐리티..) 그런데 이번 강의는 저같이 TEST 코드를 작성하는게 어려운 분들에게 조금이나마 쉽고 까다롭지 않은 방법을 알려주셔서 도움이 많이 되었습니다! 각설하고 시작하겠습니다.">
+    <meta itemprop="datePublished" content="2023-10-07T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MapStruct
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#test-코드-먼저-작성하기">Test 코드 먼저 작성하기</a></li>
+  <li><a href="#calculator-class-생성">Calculator Class 생성</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.<br />
+취업을 했어도 역시 공부를 꾸준히 해야되는것같아요.<br />
+특히나 백엔드 초격차 강의들은 꿀같은 강의가 너무많아서 듣고 따라하기만 해도 코드의 질이 많이 올라가는것 같습니다. 😍</p>
+<hr />
+
+<h3 id="test-코드-먼저-작성하기">Test 코드 먼저 작성하기</h3>
+<p>저는 이 전에 팀 프로젝트, 토이프로젝트를 쫌쫌따리 해봤었지만 테스트 주도 개발을 해본적이없었습니다.<br />
+TDD 라는 개념도 몰랐었고, 알게 되었다고 해도 이미 저는 냅다 코드를 작성하는 버릇이 생겼었기 때문에 테스트 코드를 먼저 작성하고 테스트하는게 여간 힘든게 아니였습니다.<br />
+결론적으로 든 생각은 아주 쉬운것부터 학습하고 따라하다보면 그렇게 어려운게 아니라는 생각이 들었습니다. <br />
+물론 서비스, 컨트롤러 층의 테스트 코드 작성하는건 아직도 어렵긴합니다. (특히 시큐리티..) <br />
+그런데 이번 강의는 저같이 TEST 코드를 작성하는게 어려운 분들에게 조금이나마 쉽고 까다롭지 않은 방법을 알려주셔서 도움이 많이 되었습니다! <br />각설하고 시작하겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">assertj</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">Assertions</span><span class="o">.</span><span class="na">assertThat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.DisplayName</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CalculateTest</span> <span class="o">{</span>
+
+    <span class="nd">@DisplayName</span><span class="o">(</span><span class="s">"사칙 연산을 수행한다"</span><span class="o">)</span>
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">calculateTest</span><span class="o">()</span> <span class="o">{</span>
+        
+        <span class="kt">int</span> <span class="n">calculateResult</span> <span class="o">=</span> <span class="nc">Calculator</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="mi">2</span><span class="o">,</span> <span class="s">"+"</span><span class="o">,</span> <span class="mi">1</span><span class="o">);</span>
+
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">calculateResult</span><span class="o">).</span><span class="na">isEqualTo</span><span class="o">(</span><span class="mi">3</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>@DisplayName 은 말그대로 어떤것을 테스트 할 지 이름을 적을 수 있는 어노테이션 입니다. 메서드 이름 자체를 <strong>void 사칙_연산_테스트()</strong> 이런식으로 하시는 분들도 계시더군요.
+그저 void Test() 만 아니면 될것같습니다.(베스트 케이스는 메서드 이름도 코드컨벤션에 맞게 적고 @DisplayName도 적어주는것 입니다.) Test() &lt;- 이렇게 적으시면 안됩니다! 어떤 기능을 테스트할지 메서드에 적어주거나 영문으로 짜기가 어렵다면 해당 어노테이션으로 추가적으로 작성해야만 합니다. 혼자 공부할때나 귀찮아서 명칭을 제대로 작성하지 않으시는 분들이있다면, 안돼요!! 고쳐야합니다. 😂 <br />
+물론 저같은 분이 있으실까 하지만.. 저는 참고로 취준당시 과제전형에서 테스트 코드를 전부는 아니여도 일부 작성해서 제출했었는데 그때 @DisplayName만 달고 테스트 메서드 이름을 제대로 작성안했었는데 감점요소였습니다..이제와 생각해보면 정말 바보같았지만 혹시나 저같은 분이 없으시길 바라며..<br />
+<br /></p>
+
+<p>테스트 코드는 일단 내가 뭘 구현할지 껍데기부터 작성해주고 차차 만들어나가면 됩니다.
+저는 연산할 숫자와 연산자를 넣었을 때 해당 연산자에 따라 사칙연산을 수행해주는 메서드를 만들고 싶습니다.
+그 메서드가 있다고 가정했을때, <strong>assertThat</strong> 을 통해 해당 메서드의 결과와 내가 예측한 결과가 같은지 검증하는게 calculateTest 입니다.</p>
+
+<p>어느정도 틀이 생성되었다면 현재의 테스트 코드도 조금 수정 해주겠습니다.</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">assertj</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">Assertions</span><span class="o">.</span><span class="na">assertThat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.DisplayName</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CalculateTest</span> <span class="o">{</span>
+
+    <span class="nd">@DisplayName</span><span class="o">(</span><span class="s">"사칙 연산을 수행한다"</span><span class="o">)</span>
+    <span class="nd">@Test</span>
+    <span class="kt">void</span> <span class="nf">calculateTest</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+        
+        <span class="kt">int</span> <span class="n">calculateResult</span> <span class="o">=</span> <span class="nc">Calculator</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">operand1</span><span class="o">,</span> <span class="n">operator</span><span class="o">,</span> <span class="n">operand2</span><span class="o">);</span>
+
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">calculateResult</span><span class="o">).</span><span class="na">isEqualTo</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+<p>어떤 기능을 구현할지, 변수가 이러이러한게 들어가겠다 정립이 되었습니다.<br /> 
+calculateTest 는 operand1, operand2 (숫자) 와 operator(연산자, Ex : +,-,/,*) 그리고 result 를 변수를 갖고있는 메서드입니다.
+Test를 돌려보면, 지금은 Calculator Class도 없고 caculate 메서드도 없으니 당연히 테스트 결과는 Fail 입니다.</p>
+
+<p>해당 클래스부터 생성하겠습니다.</p>
+
+<h3 id="calculator-class-생성">Calculator Class 생성</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Calculator</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"+"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">+</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"-"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">-</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"*"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">*</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"/"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">/</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Calculator 클래스를 생성해주고 사칙연산을 해주는 calculate 메서드를 생성했습니다.
+해당 메서드는 처음 테스트 코드를 생성했을때 생각했던 그대로 연산할 숫자(operand)들과 연산자(operator)을 변수로 받고, 연산자들이 어떤 연산자인지 equals 로 비교해 일치하는 연산을 수행하는 메서드입니다.
+다시한번 테스트를 돌려본다면 결과는 SUCCESS 입니다.
+<strong>더하기 연산에 대해서만요!</strong>
+제가 작성한 테스트 코드는 더하기 연산만 검증을 하는 테스트코드입니다. 이또한 개선 여지가 있겠지요?</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">com.example.calculate.refactor.first.Calculator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.api.DisplayName</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.params.ParameterizedTest</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.params.provider.Arguments</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.jupiter.params.provider.MethodSource</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.stream.Stream</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">assertj</span><span class="o">.</span><span class="na">core</span><span class="o">.</span><span class="na">api</span><span class="o">.</span><span class="na">Assertions</span><span class="o">.</span><span class="na">assertThat</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">jupiter</span><span class="o">.</span><span class="na">params</span><span class="o">.</span><span class="na">provider</span><span class="o">.</span><span class="na">Arguments</span><span class="o">.</span><span class="na">arguments</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CalculateTest</span> <span class="o">{</span>
+
+    <span class="nd">@DisplayName</span><span class="o">(</span><span class="s">"사칙 연산을 수행한다"</span><span class="o">)</span>
+    <span class="o">**</span><span class="nd">@ParameterizedTest</span><span class="o">**</span>
+    <span class="o">**</span><span class="nd">@MethodSource</span><span class="o">(</span><span class="s">"formulaAndResult"</span><span class="o">)**</span>
+    <span class="kt">void</span> <span class="nf">calculateTest</span><span class="o">(</span><span class="nc">PositiveNumber</span> <span class="n">operand1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">,</span> <span class="nc">PositiveNumber</span> <span class="n">operand2</span><span class="o">,</span> <span class="kt">int</span> <span class="n">result</span><span class="o">)</span> <span class="o">{</span>
+        
+        <span class="kt">int</span> <span class="n">calculateResult</span> <span class="o">=</span> <span class="nc">Calculator</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">operand1</span><span class="o">,</span> <span class="n">operator</span><span class="o">,</span> <span class="n">operand2</span><span class="o">);</span>
+
+        <span class="n">assertThat</span><span class="o">(</span><span class="n">calculateResult</span><span class="o">).</span><span class="na">isEqualTo</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">Arguments</span><span class="o">&gt;</span> <span class="nf">formulaAndResult</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Stream</span><span class="o">.</span><span class="na">of</span><span class="o">(</span>
+                <span class="n">arguments</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="s">"+"</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">3</span><span class="o">),</span>
+                <span class="n">arguments</span><span class="o">(</span><span class="mi">5</span><span class="o">,</span> <span class="s">"-"</span><span class="o">,</span> <span class="mi">3</span><span class="o">,</span> <span class="mi">2</span><span class="o">),</span>
+                <span class="n">arguments</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s">"*"</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">8</span><span class="o">),</span>
+                <span class="n">arguments</span><span class="o">(</span><span class="mi">4</span><span class="o">,</span> <span class="s">"/"</span><span class="o">,</span> <span class="mi">2</span><span class="o">,</span> <span class="mi">2</span><span class="o">)</span>
+        <span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>차이점이 보이시나요? 기존의 @Test 어노테이션을 빼고 <strong>@ParameterizedTest</strong>
+<strong>@MethodSource()</strong> 을 적용했습니다. @ParameterizedTest 은 뜻 그대로 파라미터를 받아 테스트를 도와주는 어노테이션이고 @MethodSource는 주입받을 파라미터를 메서드로 받아 테스트를 도와주는 메서드입니다.
+저는 Stream으로 각 Arguments들을 리턴해주는 formulaAndResult()를 생성 후, 해당 메서드를 테스트 파라미터로 넣었습니다.
+수정 후 다시 테스트를 돌려봐도 성공입니다! 인자를 메서드로 주입받으니 든든합니다.
+지금부터는 사칙연산 메서드를 리팩토링을 했을때 테스트코드의 성공 실패만 따지면 됩니다.
+계속 성공하면 리팩토링한게 문제가 없다는거고, 실패를 한다면.. 리팩토링이 제대로 되지 않았다는 의미입니다.</p>
+
+<p>다시 Calculator Class 로 돌아가서,</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Calculator</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"+"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">+</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"-"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">-</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"*"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">*</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span> <span class="o">(</span><span class="n">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="s">"/"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">/</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span>
+
+        <span class="k">return</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>지금의 calculate 메서드도 기능은 제대로 돌아가지만 개선 요소가 많습니다. 하드코딩에 예외처리가 제대로 되어있지 않습니다…
+해당 메서드는 연산자를 변수로 받고 해당 연산자가 사칙연산자 중 어떤 연산자와 일치하는지에 따라 로직이 달라지는 메서드입니다.
+흠.. 이거 뭔가 enum으로 해도 괜찮을것같습니다!</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="nc">ArithmeticOperator</span> <span class="o">{</span>
+    
+        <span class="no">ADDITION</span><span class="o">(</span><span class="s">"+"</span><span class="o">),</span> <span class="no">SUBTRACTION</span><span class="o">(</span><span class="s">"-"</span><span class="o">),</span> <span class="no">MULTIPLICATION</span><span class="o">(</span><span class="s">"*"</span><span class="o">),</span> <span class="no">DIVISION</span><span class="o">(</span><span class="s">"/"</span><span class="o">);</span>
+
+        <span class="nc">ArithmeticOperator</span><span class="o">(</span><span class="nc">String</span> <span class="n">operator</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">operator</span> <span class="o">=</span> <span class="n">operator</span><span class="o">;</span>
+        <span class="o">}</span>
+    
+        <span class="kd">public</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">;</span>
+
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>ArithmeticOperator 이라는 Enum 을 생성했습니다. 뭔가 느낌이 오시나요? ArithmeticOperator.operator 에 따라 사칙연산을 수행해줄수있도록 하면 될것같습니다.</p>
+
+<p>해당 Enum에 추상 메서드를 추가해보겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">enum</span> <span class="nc">ArithmeticOperator</span> <span class="o">{</span>
+    <span class="no">ADDITION</span><span class="o">(</span><span class="s">"+"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">arithmeticCalculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">+</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">},</span> <span class="no">SUBTRACTION</span><span class="o">(</span><span class="s">"-"</span><span class="o">){</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">arithmeticCalculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">-</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">},</span> <span class="no">MULTIPLICATION</span><span class="o">(</span><span class="s">"*"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">arithmeticCalculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">*</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">},</span> <span class="no">DIVISION</span><span class="o">(</span><span class="s">"/"</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nd">@Override</span>
+        <span class="kd">public</span> <span class="kt">int</span> <span class="nf">arithmeticCalculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">operand1</span> <span class="o">/</span> <span class="n">operand2</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">};</span>
+
+    <span class="nc">ArithmeticOperator</span><span class="o">(</span><span class="nc">String</span> <span class="n">operator</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">operator</span> <span class="o">=</span> <span class="n">operator</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">int</span> <span class="nf">arithmeticCalculate</span><span class="o">(</span><span class="kd">final</span> <span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="kd">final</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">);</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ArithmeticOperator</span> <span class="n">arithmeticOperator</span> <span class="o">=</span> <span class="nc">Arrays</span><span class="o">.</span><span class="na">stream</span><span class="o">(</span><span class="n">values</span><span class="o">())</span>
+                <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">v</span> <span class="o">-&gt;</span> <span class="n">v</span><span class="o">.</span><span class="na">operator</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="n">operator</span><span class="o">))</span>
+                <span class="o">.</span><span class="na">findFirst</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">orElseThrow</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">IllegalArgumentException</span><span class="o">(</span><span class="s">"올바른 사칙 연산이 아닙니다."</span><span class="o">));</span>
+
+        <span class="k">return</span> <span class="n">arithmeticOperator</span><span class="o">.</span><span class="na">arithmeticCalculate</span><span class="o">(</span><span class="n">operand1</span><span class="o">,</span> <span class="n">operand2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>final int operand 들을 인자로 받는 추상메서드 arithmeticCalculate 를 생성했습니다.
+각각 사칙연산자들은 int를 변수로 받는건 동일하지만 내부적인 동작들은 다르기때문에 추상메서드를 생성해 이를 상속받아 구현할 수 있도록 하였습니다.
+강의를 보고 감동받고 머리를 얻어맞은기분이였어요. java를 공부하면서 또 면접준비를 하면서 그~렇게나 많이 봤던 개념들인데 너무너무 새롭고 저는 아직 멀었다는 생각을 했답니다.
+Enum 에 추상메서드를 생성하고 enum 마다 상속받아 구현한다라?.. 해당 강사님의 강의를 끝까지 봐야겠다는 생각이 엄청나게 들었습니다.</p>
+
+<p>그리고 calculate 메서드를 보면, 스트림을 통해 변수로 들어온 연산자를 ArithmeticOperator 에 해당되는 연산자인지 equals로 비교 후 해당되는게 없으면 exception을 반환하고, <br />
+올바른 연산자일 경우에만 각각의 연산자마다 구현한 arithmeticCalculate 메서드를 실행하여 결과를 return 하는 메서드입니다.
+stream을 사용하니 가독성도 좋고 깔끔합니다!</p>
+
+<p>다시 또 기존의 Calculator Class를 수정해주겠습니다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Calculator</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">calculate</span><span class="o">(</span><span class="kt">int</span> <span class="n">operand1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">operator</span><span class="o">,</span> <span class="kt">int</span> <span class="n">operand2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">ArithmeticOperator</span><span class="o">.</span><span class="na">calculate</span><span class="o">(</span><span class="n">operand1</span><span class="o">,</span> <span class="n">operator</span><span class="o">,</span> <span class="n">operand2</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+</code></pre></div></div>
+<p>첫번째 리팩토링 후 다시 테스트코드를 돌린 결과는 성공입니다!
+리팩토링이 잘된거겠죠?
+기존의 예외처리가 안되었던 부분이나 하드코딩으로 기능을 구현했던 부분이 개선이되었습니다! 짱짱!</p>
+
+<p>하지만 좀 더 객체지향적으로 리팩토링이 가능합니다!
+<strong>바로 클래스 분리!</strong></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/" class="page__taxonomy-item" rel="tag"></a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/" class="page__taxonomy-item" rel="tag"></a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/" class="page__taxonomy-item" rel="tag"></a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#interface" class="page__taxonomy-item" rel="tag">Interface</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/" class="page__taxonomy-item" rel="tag"></a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/" class="page__taxonomy-item" rel="tag"></a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/" class="page__taxonomy-item" rel="tag"></a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/" class="page__taxonomy-item" rel="tag"></a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#java" class="page__taxonomy-item" rel="tag">Java</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/" class="page__taxonomy-item" rel="tag"></a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2023-10-07T00:00:00+09:00">October 7, 2023</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MapStruct%20http%3A%2F%2Flocalhost%3A4000%2Fjava%2C%2520tdd%2C%2520%25EA%25B0%259D%25EC%25B2%25B4%25EC%25A7%2580%25ED%2596%25A5%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fjava%2C%2520tdd%2C%2520%25EA%25B0%259D%25EC%25B2%25B4%25EC%25A7%2580%25ED%2596%25A5%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fjava%2C%2520tdd%2C%2520%25EA%25B0%259D%25EC%25B2%25B4%25EC%25A7%2580%25ED%2596%25A5%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="#" class="pagination--pager disabled">이전</a>
+    
+    
+      <a href="/java/MapStruct/" class="pagination--pager" title="MapStruct
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/java/MapStruct/" rel="permalink">MapStruct
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+  MapStruct → Java bean 유형 간의 매핑 구현을 단순화하는 코드 생성기.
+    
+      사용 이유
+    
+  
+
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2023 deohyunpark. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+  </body>
+</html>
