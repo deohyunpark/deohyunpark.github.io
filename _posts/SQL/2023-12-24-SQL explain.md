@@ -1,19 +1,18 @@
 ---
 title: "SQL explian"
 categories:
-
-- SQL
-  tags:
-- explain
-- DataBase
-  toc: true
-  toc_sticky: true
-  toc_label: ""
-  toc_icon: ""
+  - SQL
+tags:
+  - explain
+  - DataBase
+toc: true
+toc_sticky: true
+toc_label: ""
+toc_icon: ""
 
 ---
 
-#    
+#     
 
 ---
 
@@ -32,7 +31,7 @@ SQL 실행계획을 보면서 인덱스를 짜야하는데 explain이 뭔지 아
     - DDL 문 앞에 explain을 입력하면
 
   | id | select_type | table | partitions | type | possible_keys |
-        | --- | --- | --- | --- | --- | --- |
+          | --- | --- | --- | --- | --- | --- |
   | key | key_len | ref | rows | filtered | Extra |
 
   이런식의 실행계획이 나온다.
@@ -50,6 +49,7 @@ SQL 실행계획을 보면서 인덱스를 짜야하는데 explain이 뭔지 아
 ---
 [[SQL튜닝] MySQL 쿼리 튜닝, 쿼리 실행계획, Explain](https://peterica.tistory.com/417)
 <br>
+
 ---
 저는 쿼리를 실행하면서 using temporary를 본적이 몇번 있었는데 대부분이 서브쿼리, distinct, groupby를 사용하면 using temporary가 extra에 뜨더군요. 이를 보고
 어떤부분에서 쿼리를 튜닝해야 되는지 알 수 있습니다.
