@@ -26,7 +26,7 @@ baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : "deohyunpark/deohyunpark.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
-masthead_title           : "HAPPY ENDING IS MINE🥹"
+masthead_title           : "코드로 움직이는 데이터 개발자"
 future                   : true
 # breadcrumbs            : false # true, false (default)
 words_per_minute         : 200
@@ -105,9 +105,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "🌸DEOHYUNPARK🌸"
-  avatar           : "/image/profile/척추수술5000만원.png"
-  bio              : "**즐겁게 공부하기😃**<br>BACKEND<br>기록의 습관화"
+  name             : "🌼&nbsp;DEOHYUNPARK&nbsp;🌼"
+  avatar           : "/image/profile/파비콘.png"
+  bio              : "**✅&nbsp;즐겁게 공부하기😃**<br>✅&nbsp;BACKEND<br>✅&nbsp;기록의 습관화"
 
   location         : "Republic of Korea"
   email            :
