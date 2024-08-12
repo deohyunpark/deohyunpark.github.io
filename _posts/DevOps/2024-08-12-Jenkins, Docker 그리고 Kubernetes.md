@@ -13,13 +13,7 @@ categories:
   toc_label: ""
   toc_icon: ""
 ---
-
-소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.
-
-
----
-
-# JenKins, Docker 그리고 Kubernetes
+# JenKins, Docker 그리고 Kubernetes <br>
 
 ---
 
