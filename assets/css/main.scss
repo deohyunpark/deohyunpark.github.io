@@ -6,3 +6,12 @@
 
 @import "minimal-mistakes/skins/{{ site.minimal_mistakes_skin | default: 'default' }}"; // skin
 @import "minimal-mistakes"; // main partials
+
+@font-face {
+  font-family: 'Custom Monospace';
+  src: url('path/to/your/monospace-font.ttf') format('truetype');
+}
+
+.monospace-text {
+  font-family: 'Custom Monospace', monospace;
+}
