@@ -1,18 +1,20 @@
 ---
 title: JenKins, Docker 그리고 Kubernetes
 categories:
-- Jenkins
-- Docker
-- Kubernetes
-- DevOps
-- CI/CD
-- 컨테이너
-  tags:
-- MSA
-  toc_sticky: true
-  toc_label: ""
-  toc_icon: ""
+  - Jenkins
+  - Docker
+  - Kubernetes
+  - DevOps
+  - CI/CD
+  - 컨테이너
+tags:
+  - MSA
+toc_sticky: true
+toc_label: ""
+toc_icon: ""
+comments: true
 ---
+
 # JenKins, Docker 그리고 Kubernetes <br>
 
 ---

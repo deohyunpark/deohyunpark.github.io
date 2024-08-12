@@ -10,12 +10,12 @@
     <meta charset="utf-8">
 
 <!-- begin _includes/seo.html --><title>Calculate 구현하기 - deohyunpark’s weird blog</title>
-<meta name="description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.    10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online.   Part 1. 나만의 MVC 프레임워크 만들기  / 홍종화 강사님">
+<meta name="description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.    10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online.   Part 1. 나만의 MVC 프레임워크 만들기  / 홍종완 강사님">
 
 
-  <meta name="author" content="🌸DEOHYUNPARK🌸">
+  <meta name="author" content="&nbsp;HYUN&nbsp;">
   
-  <meta property="article:author" content="🌸DEOHYUNPARK🌸">
+  <meta property="article:author" content="&nbsp;HYUN&nbsp;">
   
 
 
@@ -23,10 +23,10 @@
 <meta property="og:locale" content="ko_KR">
 <meta property="og:site_name" content="deohyunpark's weird blog">
 <meta property="og:title" content="Calculate 구현하기">
-<meta property="og:url" content="http://localhost:4000/java/tdd/Calculate-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/">
+<meta property="og:url" content="http://localhost:4001/java/tdd/Calculate-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/">
 
 
-  <meta property="og:description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.    10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online.   Part 1. 나만의 MVC 프레임워크 만들기  / 홍종화 강사님">
+  <meta property="og:description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.    10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online.   Part 1. 나만의 MVC 프레임워크 만들기  / 홍종완 강사님">
 
 
 
@@ -45,7 +45,7 @@
   
 
 
-<link rel="canonical" href="http://localhost:4000/java/tdd/Calculate-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/">
+<link rel="canonical" href="http://localhost:4001/java/tdd/Calculate-%EA%B5%AC%ED%98%84-%EB%B0%8F-%EB%A6%AC%ED%8C%A9%ED%86%A0%EB%A7%81/">
 
 
 
@@ -56,7 +56,7 @@
     
       "@type": "Person",
       "name": "deohyunpark",
-      "url": "http://localhost:4000/"
+      "url": "http://localhost:4001/"
     
   }
 </script>
@@ -99,6 +99,23 @@
 
 
 
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/logo.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/logo.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/logo.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/logo.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/logo.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/logo.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/logo.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/logo.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/logo.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/logo.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
     <!-- start custom head snippets -->
 <meta name="naver-site-verification" content="d884164c2f43b5d7cfca36d514355ee3ab493511" />
 <meta name="NaverBot" content="All"/>
@@ -139,7 +156,7 @@
       <nav id="site-nav" class="greedy-nav">
         
         <a class="site-title" href="/">
-          HAPPY ENDING IS MINE🥹
+          코드로 움직이는 데이터 개발자
           
         </a>
         <ul class="visible-links"><li class="masthead__menu-item">
@@ -179,18 +196,18 @@
   
     <div class="author__avatar">
       
-        <img src="/image/profile/%EC%B2%99%EC%B6%94%EC%88%98%EC%88%A05000%EB%A7%8C%EC%9B%90.png" alt="🌸DEOHYUNPARK🌸" itemprop="image">
+        <img src="/image/profile/%ED%8C%8C%EB%B9%84%EC%BD%98.png" alt="&nbsp;HYUN&nbsp;" itemprop="image">
       
     </div>
   
 
   <div class="author__content">
     
-      <h3 class="author__name" itemprop="name">🌸DEOHYUNPARK🌸</h3>
+      <h3 class="author__name" itemprop="name">&nbsp;HYUN&nbsp;</h3>
     
     
       <div class="author__bio" itemprop="description">
-        <p><strong>즐겁게 공부하기😃</strong><br />BACKEND<br />기록의 습관화</p>
+        <p><strong>✅ 즐겁게 공부하기</strong><br />✅ BACKEND<br />✅ 기록의 습관화</p>
 
       </div>
     
@@ -289,7 +306,7 @@
 
   <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
     <meta itemprop="headline" content="Calculate 구현하기">
-    <meta itemprop="description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.  10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online.  Part 1. 나만의 MVC 프레임워크 만들기  / 홍종화 강사님">
+    <meta itemprop="description" content="패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.  10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online.  Part 1. 나만의 MVC 프레임워크 만들기  / 홍종완 강사님">
     <meta itemprop="datePublished" content="2023-10-07T00:00:00+09:00">
     
 
@@ -341,7 +358,7 @@
         <p><code class="language-plaintext highlighter-rouge">패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.</code><br /></p>
 <ul>
   <li>10개 프로젝트로 완성하는 백엔드 웹개발(Java/Spring) 초격차 패키지 Online. 
- <br />Part 1. 나만의 MVC 프레임워크 만들기  / <code class="language-plaintext highlighter-rouge">홍종화</code> 강사님<br /></li>
+ <br />Part 1. 나만의 MVC 프레임워크 만들기  / <code class="language-plaintext highlighter-rouge">홍종완</code> 강사님<br /></li>
 </ul>
 
 <hr />
@@ -885,11 +902,11 @@ validation()에서 0이나 음수가 아닌 경우에만 객체를 생성 할 �
     <h4 class="page__share-title">공유하기</h4>
   
 
-  <a href="https://twitter.com/intent/tweet?text=Calculate+%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4000%2Fjava%2Ftdd%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+  <a href="https://twitter.com/intent/tweet?text=Calculate+%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0%20http%3A%2F%2Flocalhost%3A4001%2Fjava%2Ftdd%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
 
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2Fjava%2Ftdd%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4001%2Fjava%2Ftdd%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
 
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2Fjava%2Ftdd%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4001%2Fjava%2Ftdd%2FCalculate-%25EA%25B5%25AC%25ED%2598%2584-%25EB%25B0%258F-%25EB%25A6%25AC%25ED%258C%25A9%25ED%2586%25A0%25EB%25A7%2581%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
 </section>
 
 
@@ -924,7 +941,7 @@ validation()에서 0이나 음수가 아닌 경우에만 객체를 생성 할 �
     
     <h2 class="archive__item-title no_toc" itemprop="headline">
       
-        <a href="/java/MapStruct/" rel="permalink">MapStruct
+        <a href="/git/Git-%EB%A1%9C%EC%BB%AC-%EC%82%AD%EC%A0%9C,-%EA%B9%83-%EC%BB%A4%EB%B0%8B-%EC%95%88%ED%95%98%EA%B3%A0-%EC%A0%80%EC%9E%A5,-%EA%B9%83-%EC%A0%80%EC%9E%A5-%EC%95%88%ED%95%A8,-%EA%B9%83-%EB%B3%B5%EA%B5%AC,-Git-%EC%82%AD%EC%A0%9C-%ED%8C%8C%EC%9D%BC-%EB%B3%B5%EA%B5%AC-01/" rel="permalink">Git 로컬 삭제, 깃 커밋 안하고 저장, 깃 저장 안함, 깃 로컬 복구, Git 로컬 삭제 파일 복구, 깃 로컬 파일 복구
 </a>
       
     </h2>
@@ -942,7 +959,7 @@ validation()에서 0이나 음수가 아닌 경우에만 객체를 생성 할 �
       <span class="page__meta-readtime">
         <i class="far fa-clock" aria-hidden="true"></i>
         
-          4 분 소요
+          3 분 소요
         
       </span>
     
@@ -950,13 +967,131 @@ validation()에서 0이나 음수가 아닌 경우에만 객체를 생성 할 �
 
 
     <p class="archive__item-excerpt" itemprop="description">
-  MapStruct → Java bean 유형 간의 매핑 구현을 단순화하는 코드 생성기.
-    
-      사용 이유
-    
-  
+
 
 </p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jenkins/docker/kubernetes/devops/ci/cd/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88/Jenkins,-Docker-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Kubernetes/" rel="permalink">JenKins, Docker 그리고 Kubernetes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">JenKins, Docker 그리고 Kubernetes 
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A7%80%ED%96%A5%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/MSA/" rel="permalink">MSA
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/spring%20framework/batch/Spring-Batch/" rel="permalink">Spring Batch 기초 지식 및 아키텍쳐
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Spring Batch
+스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃
+퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니.. 
+배...</p>
   </article>
 </div>
 
@@ -994,7 +1129,7 @@ validation()에서 0이나 음수가 아닌 경우에만 객체를 생성 할 �
   </ul>
 </div>
 
-<div class="page__footer-copyright">&copy; 2023 deohyunpark. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+<div class="page__footer-copyright">&copy; 2024 deohyunpark. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
 
       </footer>
     </div>
