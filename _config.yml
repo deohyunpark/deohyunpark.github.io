@@ -22,7 +22,7 @@ subtitle                 : # site tagline that appears below site title in masth
 name                     : "deohyunpark"
 description              : "공부 겸 기록 블로그"
 url                      : "https://deohyunpark.github.io"
-baseurl                  : # the subpath of your site, e.g. "/blog"
+baseurl                  : # the subpath of your site, e.g. ff"/blog"
 repository               : "deohyunpark/deohyunpark.github.io"
 teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
@@ -105,9 +105,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "🌼&nbsp;DEOHYUNPARK&nbsp;🌼"
+  name             : "&nbsp;HYUN&nbsp;"
   avatar           : "/image/profile/파비콘.png"
-  bio              : "**✅&nbsp;즐겁게 공부하기😃**<br>✅&nbsp;BACKEND<br>✅&nbsp;기록의 습관화"
+  bio              : "**✅&nbsp;즐겁게 공부하기**<br>✅&nbsp;BACKEND<br>✅&nbsp;기록의 습관화"
 
   location         : "Republic of Korea"
   email            :
