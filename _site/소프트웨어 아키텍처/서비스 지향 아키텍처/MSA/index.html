@@ -1,0 +1,811 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>MSA - deohyunpark’s weird blog</title>
+<meta name="description" content="소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.">
+
+
+  <meta name="author" content="&nbsp;HYUN&nbsp;">
+  
+  <meta property="article:author" content="&nbsp;HYUN&nbsp;">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="deohyunpark's weird blog">
+<meta property="og:title" content="MSA">
+<meta property="og:url" content="http://localhost:4001/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A7%80%ED%96%A5%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/MSA/">
+
+
+  <meta property="og:description" content="소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-08-11T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4001/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A7%80%ED%96%A5%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/MSA/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "deohyunpark",
+      "url": "http://localhost:4001/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="deohyunpark's weird blog Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/logo.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/logo.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/logo.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/logo.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/logo.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/logo.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/logo.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/logo.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/logo.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/logo.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+    <!-- start custom head snippets -->
+<meta name="naver-site-verification" content="d884164c2f43b5d7cfca36d514355ee3ab493511" />
+<meta name="NaverBot" content="All"/>
+<meta name="NaverBot" content="index,follow"/>
+<meta name="Yeti" content="All"/>
+<meta name="Yeti" content="index,follow"/>
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!--<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">-->
+<!--<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">-->
+<!--<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">-->
+<!--<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">-->
+<!--<meta name="msapplication-TileColor" content="#da532c">-->
+<!--<meta name="theme-color" content="#ffffff">-->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          코드로 움직이는 데이터 개발자
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/image/profile/%ED%8C%8C%EB%B9%84%EC%BD%98.png" alt="&nbsp;HYUN&nbsp;" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">&nbsp;HYUN&nbsp;</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p><strong>✅ 즐겁게 공부하기</strong><br />✅ BACKEND<br />✅ 기록의 습관화</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="MSA">
+    <meta itemprop="description" content="소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.">
+    <meta itemprop="datePublished" content="2024-08-11T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">MSA
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+        <p>소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.</p>
+
+<hr />
+
+<h3 id="msa란">MSA란?</h3>
+
+<p>MSA는 Microservices Architecture(마이크로서비스 아키텍처)의 약어이다.</p>
+
+<p>마이크로서비스 아키텍처는 <strong>단일한 큰 애플리케이션을 여러 개의 작은 서비스로 분리하는 소프트웨어 설계 패턴,</strong> 이 각각의 작은 서비스들은 독립적으로 배포, 확장, 관리 가능하다.</p>
+
+<h3 id="msa의-특징">MSA의 특징</h3>
+
+<ol>
+  <li>서비스 독립성: 각 서비스는 독립적으로 개발, 배포, 확장 가능하다.</li>
+  <li>기술 다양성: 각 서비스는 적절한 기술을 선택하여 구현할 수 있다.</li>
+  <li>배포 유연성: 새로운 요구사항에 따라 서비스를 쉽게 추가/변경 가능 하다.</li>
+  <li>확장성: 부하가 높은 서비스만 선택적으로 확장 가능하다.</li>
+  <li>장애 격리: 한 서비스의 장애가 전체 시스템에 미치는 영향을 최소화 할 수 있다.</li>
+</ol>
+
+<p>MSA는 <strong>대규모 복잡한 시스템을 개발하고 운영할 때 유용</strong>하다. 각 서비스가 독립적이므로 개발 및 배포 프로세스가 단순해지고, 확장성과 유연성이 높아진다. 다만 서비스 간 통신, 모니터링, 배포 등 새로운 과제들이 발생할 수 있다.</p>
+
+<h3 id="msa에서-자유로운-무중단-배포가-가능한-이유">MSA에서 자유로운 무중단 배포가 가능한 이유?</h3>
+
+<ol>
+  <li>서비스 독립성: MSA에서 각 서비스는 독립적으로 개발, 배포, 확장될 수 있다. 한 서비스의 배포가 다른 서비스에 영향을 미치지 않는다.</li>
+  <li>서비스 간 느슨한 결합: MSA에서는 서비스 간 느슨한 결합을 지향한다. 서비스 간 통신은 API 호출 등 명시적인 인터페이스를 통해 이루어집다. 이를 통해 한 서비스의 배포가 다른 서비스에 미치는 영향을 최소화할 수 있다.</li>
+  <li>서비스 버전 관리: MSA에서는 각 서비스의 버전을 독립적으로 관리할 수 있다. 새로운 버전의 서비스를 배포하더라도 이전 버전과 병렬로 운영가능, 이를 통해 서비스 중단 없이 배포를 진행할 수 있다.</li>
+  <li>서비스 등록 및 발견: MSA에서는 서비스 등록 및 발견 메커니즘을 통해 서비스 간 동적 연결이 가능, 이를 통해 새로운 버전의 서비스를 배포하더라도 기존 클라이언트가 이를 자동으로 발견하고 연결할 수 있다.</li>
+  <li>배포 자동화: MSA에서는 CI/CD 파이프라인을 활용하여 배포 프로세스를 자동화 할 수 있음, 이를 통해 빠르고 안정적인 배포가 가능</li>
+</ol>
+
+<p>따라서 MSA의 이러한 특성들은 개발팀이 서비스를 독립적으로 배포할 수 있게 하며, 이를 통해 서비스 중단 없이 빠르고 안정적인 배포가 가능해 진다.</p>
+
+<h3 id="서비스-발견-메커니즘이란">서비스 발견 메커니즘이란?</h3>
+
+<p>서비스 간 동적 연결을 가능하게 하는 기능을 말한다.</p>
+
+<h3 id="서비스-발견-메커니즘의-주요-특징">서비스 발견 메커니즘의 주요 특징</h3>
+
+<ol>
+  <li>서비스 등록: 각 서비스는 자신의 정보(IP, 포트, 버전 등)를 서비스 레지스트리에 등록</li>
+  <li>서비스 검색: 클라이언트 서비스는 서비스 레지스트리를 통해 필요한 서비스를 검색할 수 있고 서비스 레지스트리는 적절한 서비스 인스턴스를 찾아 클라이언트에게 제공</li>
+  <li>동적 연결: 클라이언트 서비스는 서비스 레지스트리에서 받은 정보를 활용하여 필요한 서비스에 동적으로 연결 가능</li>
+  <li>부하 분산: 서비스 레지스트리는 클라이언트 요청을 여러 서비스 인스턴스에 분산 가능</li>
+  <li>장애 탐지 및 복구: 서비스 레지스트리는 서비스 인스턴스의 상태를 모니터링하고, 장애 발생 시 자동으로 복구할 수 있음</li>
+</ol>
+
+<p>이러한 서비스 발견 메커니즘을 통해 MSA에서는 서비스 간 동적 연결이 가능하다. 새로운 버전의 서비스를 배포하더라도 기존 클라이언트가 자동으로 새 서비스를 발견하고 연결할 수 있다. 이를 통해 서비스 중단 없이 배포를 진행 가능하다.</p>
+
+<h3 id="개발자로서-msa를-활용해야-하는-이유는">개발자로서 MSA를 활용해야 하는 이유는?</h3>
+
+<ol>
+  <li>기술 선택의 자유
+    <ul>
+      <li>각 서비스에 적합한 기술 스택을 선택할 수 있어 개발 생산성이 높아진다.</li>
+    </ul>
+  </li>
+  <li>독립적인 개발 및 배포
+    <ul>
+      <li>서비스 간 결합도가 낮아 개별 서비스의 독립적인 개발 및 배포가 가능하다.</li>
+    </ul>
+  </li>
+  <li>확장성 및 가용성 향상
+    <ul>
+      <li>서비스 장애 시 다른 서비스에 미치는 영향이 최소화되어 시스템의 확장성과 가용성이 높아진다.</li>
+    </ul>
+  </li>
+</ol>
+
+<h3 id="구체적인-msa-활용-사례">구체적인 MSA 활용 사례</h3>
+
+<ul>
+  <li>전자상거래 플랫폼: 장바구니, 결제, 배송 등의 기능을 독립적인 서비스로 분리하여 개발 및 배포</li>
+  <li>금융 서비스: 계좌 조회, 송금, 대출 등의 기능을 독립적인 서비스로 분리하여 개발 및 배포</li>
+  <li>게임 플랫폼: 게임 로그인, 게임 매치메이킹, 게임 순위 등의 기능을 독립적인 서비스로 분리하여 개발 및 배포</li>
+</ul>
+
+<h3 id="msa-구현-시-일반적으로-사용되는-대표적인-기술">MSA 구현 시 일반적으로 사용되는 대표적인 기술</h3>
+
+<ol>
+  <li>서비스 통신 기술:
+    <ol>
+      <li>REST API</li>
+      <li>gRPC</li>
+      <li>메시징 큐(RabbitMQ, Apache Kafka 등)</li>
+      <li>서비스 메시(Service Mesh) - Istio, Linkerd 등</li>
+    </ol>
+  </li>
+  <li>서비스 등록 및 발견 기술:
+    <ol>
+      <li>Service Discovery - Consul, Zookeeper, Eureka 등</li>
+      <li>API Gateway - Kong, Nginx, Zuul 등</li>
+    </ol>
+  </li>
+  <li>컨테이너 기술:
+    <ol>
+      <li>Docker</li>
+      <li>Kubernetes</li>
+    </ol>
+  </li>
+  <li>배포 및 오케스트레이션 기술:
+    <ol>
+      <li>CI/CD 도구 - Jenkins, CircleCI, Travis CI 등</li>
+      <li>배포 자동화 - Ansible, Terraform, CloudFormation 등</li>
+    </ol>
+  </li>
+  <li>모니터링 및 로깅 기술:
+    <ol>
+      <li>모니터링 - Prometheus, Grafana, Elastic Stack 등</li>
+      <li>로깅 - Elasticsearch, Fluentd, Logstash 등</li>
+    </ol>
+  </li>
+  <li>서비스 메시 기술:
+    <ol>
+      <li>Istio</li>
+      <li>Linkerd</li>
+      <li>Consul Connect</li>
+    </ol>
+  </li>
+  <li>서비스 검색 및 API 관리 기술:
+    <ol>
+      <li>Consul</li>
+      <li>Zookeeper</li>
+      <li>Netflix Eureka</li>
+    </ol>
+  </li>
+  <li>데이터 스토리지 기술:
+    <ol>
+      <li>NoSQL 데이터베이스 - MongoDB, Cassandra, Couchbase 등</li>
+      <li>분산 파일 시스템 - HDFS, S3 등</li>
+    </ol>
+  </li>
+</ol>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#msa" class="page__taxonomy-item" rel="tag">MSA</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#%EC%84%9C%EB%B9%84%EC%8A%A4-%EC%A7%80%ED%96%A5-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98" class="page__taxonomy-item" rel="tag">서비스 지향 아키텍처</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98" class="page__taxonomy-item" rel="tag">소프트웨어 아키텍처</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2024-08-11T00:00:00+09:00">August 11, 2024</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=MSA%20http%3A%2F%2Flocalhost%3A4001%2F%25EC%2586%258C%25ED%2594%2584%25ED%258A%25B8%25EC%259B%25A8%25EC%2596%25B4%2520%25EC%2595%2584%25ED%2582%25A4%25ED%2585%258D%25EC%25B2%2598%2F%25EC%2584%259C%25EB%25B9%2584%25EC%258A%25A4%2520%25EC%25A7%2580%25ED%2596%25A5%2520%25EC%2595%2584%25ED%2582%25A4%25ED%2585%258D%25EC%25B2%2598%2FMSA%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4001%2F%25EC%2586%258C%25ED%2594%2584%25ED%258A%25B8%25EC%259B%25A8%25EC%2596%25B4%2520%25EC%2595%2584%25ED%2582%25A4%25ED%2585%258D%25EC%25B2%2598%2F%25EC%2584%259C%25EB%25B9%2584%25EC%258A%25A4%2520%25EC%25A7%2580%25ED%2596%25A5%2520%25EC%2595%2584%25ED%2582%25A4%25ED%2585%258D%25EC%25B2%2598%2FMSA%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4001%2F%25EC%2586%258C%25ED%2594%2584%25ED%258A%25B8%25EC%259B%25A8%25EC%2596%25B4%2520%25EC%2595%2584%25ED%2582%25A4%25ED%2585%258D%25EC%25B2%2598%2F%25EC%2584%259C%25EB%25B9%2584%25EC%258A%25A4%2520%25EC%25A7%2580%25ED%2596%25A5%2520%25EC%2595%2584%25ED%2582%25A4%25ED%2585%258D%25EC%25B2%2598%2FMSA%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/spring%20framework/batch/Spring-Batch/" class="pagination--pager" title="Spring Batch 기초 지식 및 아키텍쳐
+">이전</a>
+    
+    
+      <a href="/jenkins/docker/kubernetes/devops/ci/cd/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88/Jenkins,-Docker-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Kubernetes/" class="pagination--pager" title="JenKins, Docker 그리고 Kubernetes
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/git/Git-%EB%A1%9C%EC%BB%AC-%EC%82%AD%EC%A0%9C,-%EA%B9%83-%EC%BB%A4%EB%B0%8B-%EC%95%88%ED%95%98%EA%B3%A0-%EC%A0%80%EC%9E%A5,-%EA%B9%83-%EC%A0%80%EC%9E%A5-%EC%95%88%ED%95%A8,-%EA%B9%83-%EB%B3%B5%EA%B5%AC,-Git-%EC%82%AD%EC%A0%9C-%ED%8C%8C%EC%9D%BC-%EB%B3%B5%EA%B5%AC-01/" rel="permalink">Git 로컬 삭제, 깃 커밋 안하고 저장, 깃 저장 안함, 깃 로컬 복구, Git 로컬 삭제 파일 복구, 깃 로컬 파일 복구
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jenkins/docker/kubernetes/devops/ci/cd/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88/Jenkins,-Docker-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Kubernetes/" rel="permalink">JenKins, Docker 그리고 Kubernetes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">JenKins, Docker 그리고 Kubernetes 
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/spring%20framework/batch/Spring-Batch/" rel="permalink">Spring Batch 기초 지식 및 아키텍쳐
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Spring Batch
+스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃
+퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니.. 
+배...</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ai/transfomer/%EC%9E%90%EC%97%B0%EC%96%B4/%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9E%90%EC%97%B0%EC%96%B4-%EC%B2%98%EB%A6%AC-%EA%B8%B0%EC%88%A0/" rel="permalink">다양한 자연어 처리 기술
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">짧다면 짧고 길다면 긴 1년이 지났습니다. 여러 신기술을 보던 중 관심이 생긴 AI에 대해서 찍먹 해보려고 적어보는 포스팅입니다. 🥹
+한글부터도 너무나 어려운데 언어는 얼마나 어려울지..
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 deohyunpark. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'deohyunpark/deohyunpark.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'photon-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

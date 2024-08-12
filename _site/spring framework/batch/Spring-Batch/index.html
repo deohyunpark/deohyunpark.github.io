@@ -1,0 +1,923 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Spring Batch 기초 지식 및 아키텍쳐 - deohyunpark’s weird blog</title>
+<meta name="description" content="Spring Batch 스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃 퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니..  배치로 마이그레이션을 했다면 더 재밌고 뿌듯했을것같아 조금 아쉬운 밤이네요. 코드로 이관하기보단 Glue나 다른 프레임 워크들을 사용해서 이관해보고 싶었는데 말입니다. 👍🏻">
+
+
+  <meta name="author" content="&nbsp;HYUN&nbsp;">
+  
+  <meta property="article:author" content="&nbsp;HYUN&nbsp;">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="deohyunpark's weird blog">
+<meta property="og:title" content="Spring Batch 기초 지식 및 아키텍쳐">
+<meta property="og:url" content="http://localhost:4001/spring%20framework/batch/Spring-Batch/">
+
+
+  <meta property="og:description" content="Spring Batch 스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃 퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니..  배치로 마이그레이션을 했다면 더 재밌고 뿌듯했을것같아 조금 아쉬운 밤이네요. 코드로 이관하기보단 Glue나 다른 프레임 워크들을 사용해서 이관해보고 싶었는데 말입니다. 👍🏻">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-08-11T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4001/spring%20framework/batch/Spring-Batch/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "deohyunpark",
+      "url": "http://localhost:4001/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="deohyunpark's weird blog Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/logo.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/logo.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/logo.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/logo.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/logo.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/logo.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/logo.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/logo.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/logo.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/logo.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+    <!-- start custom head snippets -->
+<meta name="naver-site-verification" content="d884164c2f43b5d7cfca36d514355ee3ab493511" />
+<meta name="NaverBot" content="All"/>
+<meta name="NaverBot" content="index,follow"/>
+<meta name="Yeti" content="All"/>
+<meta name="Yeti" content="index,follow"/>
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!--<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">-->
+<!--<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">-->
+<!--<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">-->
+<!--<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">-->
+<!--<meta name="msapplication-TileColor" content="#da532c">-->
+<!--<meta name="theme-color" content="#ffffff">-->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          코드로 움직이는 데이터 개발자
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/image/profile/%ED%8C%8C%EB%B9%84%EC%BD%98.png" alt="&nbsp;HYUN&nbsp;" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">&nbsp;HYUN&nbsp;</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p><strong>✅ 즐겁게 공부하기</strong><br />✅ BACKEND<br />✅ 기록의 습관화</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Spring Batch 기초 지식 및 아키텍쳐">
+    <meta itemprop="description" content="Spring Batch스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니.. 배치로 마이그레이션을 했다면 더 재밌고 뿌듯했을것같아 조금 아쉬운 밤이네요. 코드로 이관하기보단 Glue나 다른 프레임 워크들을 사용해서 이관해보고 싶었는데 말입니다. 👍🏻">
+    <meta itemprop="datePublished" content="2024-08-11T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">Spring Batch 기초 지식 및 아키텍쳐
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#spring-batch">Spring Batch</a>
+    <ul>
+      <li><a href="#스프링-배치란">스프링 배치란?</a></li>
+      <li><a href="#배치-애플리케이션의-조건">배치 애플리케이션의 조건</a></li>
+      <li><a href="#스프링-배치가-어떤-경우에-사용되는지">스프링 배치가 어떤 경우에 사용되는지?</a></li>
+    </ul>
+  </li>
+  <li><a href="#spring-batch-아키텍쳐">Spring Batch 아키텍쳐</a></li>
+  <li><a href="#spring-batch-기본-생성-메타-데이터">Spring Batch 기본 생성 메타 데이터</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <h2 id="spring-batch">Spring Batch</h2>
+<p>스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃<br />
+퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니.. <br />
+배치로 마이그레이션을 했다면 더 재밌고 뿌듯했을것같아 조금 아쉬운 밤이네요. 코드로 이관하기보단 Glue나 다른 프레임 워크들을 사용해서 이관해보고 싶었는데 말입니다. 👍🏻</p>
+
+<hr />
+
+<h3 id="스프링-배치란">스프링 배치란?</h3>
+
+<ul>
+  <li>대량의 데이터를 효율적으로 처리하기 위한 프레임 워크입니다.</li>
+  <li>스케쥴러와는 다릅니다.
+    <ul>
+      <li>Batch는 일괄 처리를 위한 프로그램이고 사용자의 명령이 있을 때 실행됩니다.</li>
+      <li>스케쥴러는 정해진 시간에 자동으로 실행되는 프로그램 입니다. 즉, 주기적으로 실행되는 작업을 설정 가능합니다.</li>
+    </ul>
+  </li>
+  <li>일반적으로 DB, 파일, 메시징 시스템 등에서 대량의 데이터를 읽어와 가공하고 다시 일괄처리 하는 작업을 수행합니다.</li>
+  <li>Batch의 핵심 패턴은 DB의 ETL 개념과 비슷합니다.
+    <ul>
+      <li>Read : 데이터베이스, 파일, 큐에서 다양한 데이터를 조회한다.</li>
+      <li>Process : 특정 방법으로 데이터를 가공한다</li>
+      <li>Write : 데이터를 수정된 양식으로 다시 저장한다.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="배치-애플리케이션의-조건">배치 애플리케이션의 조건</h3>
+
+<ul>
+  <li>대용량 데이터: 대량의 데이터를 가져오거나, 전달하거나, 계산하는 등의 처리를 할 수 있어야 한다.</li>
+  <li>자동화: 심각한 에러를 제외하고는 사용자 개입 없이 실행되어야 한다.</li>
+  <li>신뢰성: 로깅, 알림으로 무엇이 잘못되었는지를 추적 할 수 있어야 한다.</li>
+  <li>성능: 지정한 시간 안에 처리가 가능해야 하고 동시에 실행되는 다른 애플리케이션을 방해하지 안도록 수행되어야 한다.</li>
+</ul>
+
+<h3 id="스프링-배치가-어떤-경우에-사용되는지">스프링 배치가 어떤 경우에 사용되는지?</h3>
+
+<ol>
+  <li>매월 말일 회계 데이터를 이전 시스템에서 새로운 시스템으로 마이그레이션하는 경우</li>
+  <li>매일 밤 고객의 구매 내역을 분석하여 추천 상품을 생성하는 경우</li>
+  <li>매일 업로드되는 CSV 파일을 처리하여 데이터베이스에 적재하는 경우</li>
+  <li>매월 말일 원간 매출 보고서 등 비즈니스 보고서 생성하는 경우</li>
+  <li>데이터 백업 및 아카이빙</li>
+</ol>
+
+<h2 id="spring-batch-아키텍쳐">Spring Batch 아키텍쳐</h2>
+
+<p><img src="https://github.com/user-attachments/assets/38661437-04ba-439c-bf5e-bfa66e92186c" alt="perfect_batch_architecher" /></p>
+
+<p><strong>여기서 Job, Step, Tasket 등은 배치를 특정 단계/흐름에 따라 처리하고 구성하는 도메인이고 <br />
+이를 제외한 JobInstance, JobExecution, StepExecution 등은 배치 단계마다 실행 정보나 상태 등을 DB에 저장하기 위한 메타데이터 도메인이다.</strong></p>
+
+<ol>
+  <li>JobLauncher
+    <ol>
+      <li>배치 Job을 실행시키는 인터페이스
+        <ol>
+          <li><strong>JobLauncher.run(Job, JobParamemters)</strong></li>
+        </ol>
+      </li>
+      <li>Job과 JobParameters를 인자로 받으며 요청된 배치 작업을 수행한 후 최종 Client에게 JobExcution을 반환함</li>
+    </ol>
+  </li>
+  <li>Job
+    <ol>
+      <li>하나의 배치를 Job 이라는 단위로 만들어 놓은 객체</li>
+      <li>배치 처리 과정 전체 계층에서 최상단에 위치</li>
+      <li>최소 1개 이상의 Step을 가져야 한다. 이런 Step들이 모여 Job을 이루게 된다.</li>
+    </ol>
+  </li>
+  <li>JobInstance
+    <ol>
+      <li>실제로 실행되는 배치 작업의 인스턴스를 나타낸다.</li>
+      <li>각 Job 실행마다 새로운 JobInstance가 생성
+예를들어, 하루에 Job을 여러번 실행 시키면 실행 할 때마다 새로운 JobInstance가 생성된다.
+( 예시 :
+        <ul>
+          <li>JobInstance 1: userExportJob, { “date” : “2023-04-17” }</li>
+          <li>JobInstance 2: userExportJob, { “date” : “2023-04-17” }</li>
+          <li>JobInstance 3: userExportJob, { “date” : “2023-04-17” }</li>
+        </ul>
+
+        <p>만약 JobInstance 2의 데이터 가져오기가 실패했다면 JobInstance 2만 재실행 시키면 된다. 다른 시간대의 JobInstance에 영향을 미치지 않는다.)</p>
+      </li>
+      <li>JobParameters로 구성되어 있고(1:1관계) Parameter은 Job을 구분하는 고유 식별자 역할을 한다.</li>
+      <li>JobInstance는 배치 작업의 고유한 실행 단위를 나타내며, 동일한 Job Parameters를 가지면 같은 JobInstance로 간주된다.</li>
+      <li>논리적으로 Job을 실행한다. (예를들어 배치 작업에서 1,000건의 데이터를 처리하는것을 1개의 논리적 작업 실행 단위로 정의 가능 = 실제 데이터 처리 단위와는 별개로 정의)</li>
+      <li>JobExecution들의 모음</li>
+    </ol>
+  </li>
+  <li>JobExecution
+    <ol>
+      <li>Job을 실행하는 단일시도에 대한 객체</li>
+      <li>실패한 JobInstance에 대해 새로운 실행을 하게 되면 새로운 JobExecution이 생성된다. <em>(<strong>JobInstance는 동일한 JobParameter로는 오직 1번만 실행된다.</strong> 하지만 동일한 Job이 실패 된다면 실패한 JobInstance를 재사용하여  여러번 Job 재실행이 가능하다. 이럴경우 <strong>동일한 JobInstance에서 JobExecution만 새로 insert</strong>된다. 1:N 관계)</em></li>
+      <li>JobInstance에 대한 상태, 시작/종료시간 등의 정보를 담음</li>
+    </ol>
+  </li>
+  <li>Step
+    <ol>
+      <li>Job을 구성하는 독립된 작업의 단위</li>
+      <li>순차적인 단계를 캡슐화함
+(ex step 1: 사과를 깎는다, step 1 : 사과를 먹는다, step 3 : 사과껍질을 버린다.)</li>
+      <li>
+        <p>Tasklet, Chunk 두 가지의 기반이 존재함</p>
+
+        <p>Job &gt; Step &gt; Tasklet or [Read, processing, Write] 이런 구조로 보면되고, 하나의 Tasklet과 Read, Processing, Write 묶음은 동일 레벨로 볼 수 있다.</p>
+
+        <p><img width="450" alt="스크린샷 2024-08-11 오후 10 31 03" src="https://github.com/user-attachments/assets/aaa6c47b-1380-4089-bbe5-97e45d98f65e" /></p>
+
+        <p>1️⃣ <strong>Tasket 기반</strong></p>
+
+        <p><img width="680" alt="스크린샷 2024-08-11 오후 10 39 36" src="https://github.com/user-attachments/assets/a575a192-256e-4480-b26b-4e0711aad692" /></p>
+
+        <ul>
+          <li>
+            <p>Tasklet 기반 Step은 Step 이 중지될 때 까지 execute 메서드가 반복적으로 실행된다.</p>
+
+            <p>즉, Tasklet은 수행 될 때 마다 <strong>독립적인 트랜잭션</strong>을 가진다.</p>
+          </li>
+          <li>주로 데이터베이스 쿼리 실행같은 <strong>간단한 작업</strong>을 수행하거나, 초기화/정리 작업, 특정 조건에 따라 다음 Step 실행여부를 결정하거나 트랜잭션 관리 등에 적합하다.</li>
+          <li>Tasklet의 execute 메서드의 return 타입은 RepeatStatus.FINISHED(종료) / RepeatStatus.CONTINUABLE(재실행) 두 가지만 가능하다.</li>
+        </ul>
+
+        <p>2️⃣ <strong>Chunk 기반</strong></p>
+
+        <p><img width="687" alt="스크린샷 2024-08-11 오후 10 39 48" src="https://github.com/user-attachments/assets/8a6eb41e-7904-4060-864c-347277531cc6" /></p>
+
+        <ul>
+          <li>ItemReader, ItemProsessor, ItemWriter은 종속적인 구조가 아니라 하나의 묶음으로 치환된다.</li>
+          <li>
+            <p>일반적으로 Batch는 대용량 데이터를 다루는 케이스가 많기 때문에 Tasklet 보다 <strong>상대적으로 트랜잭션의 단위를 짧게 하여 처리할 수 있는 Chunk 기반 Step을 사용</strong> (Chunk의 경우엔 실패한 Chunk 만큼만 롤백이 되고, 이전 커밋된 트랜잭션 범위까지는 반영이 된다.)</p>
+
+            <p><img width="471" alt="스크린샷 2024-08-11 오후 11 39 06" src="https://github.com/user-attachments/assets/3a4085e9-fa94-455f-80bc-f1c180cccbcb" /></p>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>StepExcution
+    <ol>
+      <li>Step을 실행하는 단일시도에 대한 객체</li>
+      <li>Step이 매번 시도 될 때마다 생성되며 Job에 구성된 Step 별로 생성된다.</li>
+      <li>Job이 재실행 되더라도 이미 성공된 Step들은 재실행 되지 않고 실패한 Step들만 재실행된다.</li>
+      <li>Step의 StepExecution이 모두 정상적으로 완료되어야 JobExecution도 정상적으로 안료된다.</li>
+      <li>Step의 StepExecution 중 하나라도 실패 시 JobExcution은 실패한다. (1:N관계)</li>
+    </ol>
+  </li>
+  <li>JobRepository
+    <ol>
+      <li>인터페이스로 배치 수행과 관련된 Meta Data(시작/실패/종료 시간, 상태, 읽기/쓰기 횟수 등)를 저장하며 배치 도메인 모델 및 관련 상태를 유지하기 위한 영구 저장소</li>
+      <li>Job, JobInstance, JobExecution, StepExecution 등 배치 작업과 관련된 주요 엔티티들에 대한 CRUD 작업을 함</li>
+    </ol>
+  </li>
+</ol>
+
+<p>👍🏻 이해를 위한 흐름</p>
+
+<p><img src="https://github.com/user-attachments/assets/91fbe6f6-8a0a-4038-9d9f-9bafb01f3009" alt="job_and_step" /></p>
+
+<ul>
+  <li>동일한 Job에 대한 여러 JobInstance들은 동일한 Step 구조를 가지지만, 각 JobInstance는 독립적으로 실행되고 관리됨</li>
+  <li>Job 실행 → JobInstance 생성 → JobExecution 생성
+Step 실행 → StepExecution 생성
+StepExcution COMPLETED 반환 시 → JobExecution도 COMPLETED 반환 후 해당 Job을 성공적으로 완료함
+StepExcution FAIL 반환 시 → 재실행할 경우 JobExecution 생성 → 각 Step을 실행하고 StepExcution 생성, 모든 StepExcution이 COMPLETED이면 JobExecutopm도 COMPLETED가 된다.</li>
+  <li>Job 실행 과정 :
+    <ol>
+      <li>Job 실행 시 새로운 JobInstance가 생성</li>
+      <li>그리고 해당 JobInstance에 대한 새로운 JobExecution이 생성</li>
+      <li>각 Step이 실행되면 해당 Step에 대한 StepExecution이 생성</li>
+      <li>모든 StepExecution이 COMPLETED 상태가 되면 해당 JobExecution도 COMPLETED 상태가 된다.</li>
+    </ol>
+  </li>
+  <li>Step 실행 과정에서 실패가 발생하면:
+    <ol>
+      <li>실패한 JobExecution에 대해 재실행 할 수 있음</li>
+      <li>새로운 JobExecution이 생성되고, 각 Step이 다시 실행 됨</li>
+      <li>모든 StepExecution이 COMPLETED 상태가 되면 해당 JobExecution도 COMPLETED 상태가 된다.</li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="spring-batch-기본-생성-메타-데이터">Spring Batch 기본 생성 메타 데이터</h2>
+
+<p>(H2의 경우에만 Boot가 자동으로 생성해주지만 그 외 MySQL이나 Oracle은 자동으로 생성 되지 않기 때문에 메타 테이블을 직접 생성하면 된다. 해당 테이블이 생성되지 않으면 Job도 실행이 안됨)</p>
+
+<ul>
+  <li>메타 데이터는 Job의 로그용 데이터라고 보면 된다.</li>
+  <li>기본 메타 데이터 테이블 구조</li>
+</ul>
+
+<p><img src="https://github.com/user-attachments/assets/73ba40d8-9dd0-4341-8cb5-22c03424d49a" alt="jobRepository" /></p>
+
+<ul>
+  <li>BATCH_JOB_INSTANCE
+    <ul>
+      <li>Job 실행의 단위인 JobInstance 정보를 저장</li>
+    </ul>
+  </li>
+  <li>BATCH_JOB_EXECUTION
+    <ul>
+      <li>JobInstance 실행 정보인 JobExecution 데이터를 저장</li>
+    </ul>
+  </li>
+  <li>BATCH_JOB_EXECUTION_PARAMS
+    <ul>
+      <li>JobExecution 실행 시 사용된 파라미터 정보를 저장</li>
+    </ul>
+  </li>
+  <li>BATCH_JOB_EXECUTION_CONTEXT
+    <ul>
+      <li>JobExecution 실행 시 사용된 컨텍스트 데이터를 저장</li>
+    </ul>
+  </li>
+  <li>BATCH_STEP_EXECUTION
+    <ul>
+      <li>Step 실행 정보인 StepExecution 데이터를 저장</li>
+    </ul>
+  </li>
+  <li>BATCH_STEP_EXECUTION_CONTEXT
+    <ul>
+      <li>StepExecution 실행 중 사용된 컨텍스트 데이터를 저장</li>
+    </ul>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#spring-batch" class="page__taxonomy-item" rel="tag">Spring Batch</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/tags/#%EB%8C%80%EC%9A%A9%EB%9F%89-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B2%98%EB%A6%AC" class="page__taxonomy-item" rel="tag">대용량 데이터 처리</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#batch" class="page__taxonomy-item" rel="tag">Batch</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#spring-framework" class="page__taxonomy-item" rel="tag">Spring Framework</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2024-08-11T00:00:00+09:00">August 11, 2024</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Spring+Batch+%EA%B8%B0%EC%B4%88+%EC%A7%80%EC%8B%9D+%EB%B0%8F+%EC%95%84%ED%82%A4%ED%85%8D%EC%B3%90%20http%3A%2F%2Flocalhost%3A4001%2Fspring%2520framework%2Fbatch%2FSpring-Batch%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4001%2Fspring%2520framework%2Fbatch%2FSpring-Batch%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4001%2Fspring%2520framework%2Fbatch%2FSpring-Batch%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/ai/transfomer/%EC%9E%90%EC%97%B0%EC%96%B4/%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9E%90%EC%97%B0%EC%96%B4-%EC%B2%98%EB%A6%AC-%EA%B8%B0%EC%88%A0/" class="pagination--pager" title="다양한 자연어 처리 기술
+">이전</a>
+    
+    
+      <a href="/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A7%80%ED%96%A5%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/MSA/" class="pagination--pager" title="MSA
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/git/Git-%EB%A1%9C%EC%BB%AC-%EC%82%AD%EC%A0%9C,-%EA%B9%83-%EC%BB%A4%EB%B0%8B-%EC%95%88%ED%95%98%EA%B3%A0-%EC%A0%80%EC%9E%A5,-%EA%B9%83-%EC%A0%80%EC%9E%A5-%EC%95%88%ED%95%A8,-%EA%B9%83-%EB%B3%B5%EA%B5%AC,-Git-%EC%82%AD%EC%A0%9C-%ED%8C%8C%EC%9D%BC-%EB%B3%B5%EA%B5%AC-01/" rel="permalink">Git 로컬 삭제, 깃 커밋 안하고 저장, 깃 저장 안함, 깃 로컬 복구, Git 로컬 삭제 파일 복구, 깃 로컬 파일 복구
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jenkins/docker/kubernetes/devops/ci/cd/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88/Jenkins,-Docker-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Kubernetes/" rel="permalink">JenKins, Docker 그리고 Kubernetes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">JenKins, Docker 그리고 Kubernetes 
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A7%80%ED%96%A5%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/MSA/" rel="permalink">MSA
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/ai/transfomer/%EC%9E%90%EC%97%B0%EC%96%B4/%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9E%90%EC%97%B0%EC%96%B4-%EC%B2%98%EB%A6%AC-%EA%B8%B0%EC%88%A0/" rel="permalink">다양한 자연어 처리 기술
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">짧다면 짧고 길다면 긴 1년이 지났습니다. 여러 신기술을 보던 중 관심이 생긴 AI에 대해서 찍먹 해보려고 적어보는 포스팅입니다. 🥹
+한글부터도 너무나 어려운데 언어는 얼마나 어려울지..
+</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 deohyunpark. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'deohyunpark/deohyunpark.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'photon-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

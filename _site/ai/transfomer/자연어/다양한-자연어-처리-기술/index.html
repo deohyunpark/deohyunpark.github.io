@@ -1,0 +1,796 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.20.2 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="ko" class="no-js">
+  <head>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>다양한 자연어 처리 기술 - deohyunpark’s weird blog</title>
+<meta name="description" content="짧다면 짧고 길다면 긴 1년이 지났습니다. 여러 신기술을 보던 중 관심이 생긴 AI에 대해서 찍먹 해보려고 적어보는 포스팅입니다. 🥹 한글부터도 너무나 어려운데 언어는 얼마나 어려울지..">
+
+
+  <meta name="author" content="&nbsp;HYUN&nbsp;">
+  
+  <meta property="article:author" content="&nbsp;HYUN&nbsp;">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="ko_KR">
+<meta property="og:site_name" content="deohyunpark's weird blog">
+<meta property="og:title" content="다양한 자연어 처리 기술">
+<meta property="og:url" content="http://localhost:4001/ai/transfomer/%EC%9E%90%EC%97%B0%EC%96%B4/%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9E%90%EC%97%B0%EC%96%B4-%EC%B2%98%EB%A6%AC-%EA%B8%B0%EC%88%A0/">
+
+
+  <meta property="og:description" content="짧다면 짧고 길다면 긴 1년이 지났습니다. 여러 신기술을 보던 중 관심이 생긴 AI에 대해서 찍먹 해보려고 적어보는 포스팅입니다. 🥹 한글부터도 너무나 어려운데 언어는 얼마나 어려울지..">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2024-08-11T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4001/ai/transfomer/%EC%9E%90%EC%97%B0%EC%96%B4/%EB%8B%A4%EC%96%91%ED%95%9C-%EC%9E%90%EC%97%B0%EC%96%B4-%EC%B2%98%EB%A6%AC-%EA%B8%B0%EC%88%A0/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "deohyunpark",
+      "url": "http://localhost:4001/"
+    
+  }
+</script>
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+<link href="/feed.xml" type="application/atom+xml" rel="alternate" title="deohyunpark's weird blog Feed">
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css">
+
+<!--[if IE]>
+  <style>
+    /* old IE unsupported flexbox fixes */
+    .greedy-nav .site-title {
+      padding-right: 3em;
+    }
+    .greedy-nav button {
+      position: absolute;
+      top: 0;
+      right: 0;
+      height: 100%;
+    }
+  </style>
+<![endif]-->
+
+
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/logo.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/logo.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/logo.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/logo.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/logo.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/logo.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/logo.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/logo.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/logo.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/logo.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/logo.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+    <!-- start custom head snippets -->
+<meta name="naver-site-verification" content="d884164c2f43b5d7cfca36d514355ee3ab493511" />
+<meta name="NaverBot" content="All"/>
+<meta name="NaverBot" content="index,follow"/>
+<meta name="Yeti" content="All"/>
+<meta name="Yeti" content="index,follow"/>
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+<!--<link rel="apple-touch-icon" sizes="180x180" href="/assets/logo.ico/apple-touch-icon.png">-->
+<!--<link rel="icon" type="image/png" sizes="32x32" href="/assets/logo.ico/favicon-32x32.png">-->
+<!--<link rel="icon" type="image/png" sizes="16x16" href="/assets/logo.ico/favicon-16x16.png">-->
+<!--<link rel="mask-icon" href="/assets/logo.ico/safari-pinned-tab.svg" color="#5bbad5">-->
+<!--<meta name="msapplication-TileColor" content="#da532c">-->
+<!--<meta name="theme-color" content="#ffffff">-->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <h2 class="screen-reader-text">Skip links</h2>
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          코드로 움직이는 데이터 개발자
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/">Home</a>
+            </li><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">토글 메뉴</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+  <div class="sidebar sticky">
+  
+
+
+<div itemscope itemtype="https://schema.org/Person">
+
+  
+    <div class="author__avatar">
+      
+        <img src="/image/profile/%ED%8C%8C%EB%B9%84%EC%BD%98.png" alt="&nbsp;HYUN&nbsp;" itemprop="image">
+      
+    </div>
+  
+
+  <div class="author__content">
+    
+      <h3 class="author__name" itemprop="name">&nbsp;HYUN&nbsp;</h3>
+    
+    
+      <div class="author__bio" itemprop="description">
+        <p><strong>✅ 즐겁게 공부하기</strong><br />✅ BACKEND<br />✅ 기록의 습관화</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">팔로우</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+            <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+  
+  </div>
+
+
+
+  <article class="page" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="다양한 자연어 처리 기술">
+    <meta itemprop="description" content="짧다면 짧고 길다면 긴 1년이 지났습니다. 여러 신기술을 보던 중 관심이 생긴 AI에 대해서 찍먹 해보려고 적어보는 포스팅입니다. 🥹한글부터도 너무나 어려운데 언어는 얼마나 어려울지..">
+    <meta itemprop="datePublished" content="2024-08-11T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title" itemprop="headline">다양한 자연어 처리 기술
+</h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On This Page</h4></header>
+              <ul class="toc__menu">
+  <li><a href="#다양한-자연어-처리-기술">다양한 자연어 처리 기술</a></li>
+</ul>
+
+            </nav>
+          </aside>
+        
+        <p>짧다면 짧고 길다면 긴 1년이 지났습니다. 여러 신기술을 보던 중 관심이 생긴 AI에 대해서 찍먹 해보려고 적어보는 포스팅입니다. 🥹<br />
+한글부터도 너무나 어려운데 언어는 얼마나 어려울지..</p>
+
+<hr />
+
+<h1 id="다양한-자연어-처리-기술">다양한 자연어 처리 기술</h1>
+
+<ol>
+  <li>자연어 생성 모델:
+    <ol>
+      <li>자연어 생성 모델은 입력 데이터를 바탕으로 인간이 이해할 수 있는 자연어 텍스트를 생성하는 모델</li>
+      <li>GPT와 같은 Transformer 기반 모델이 대표적인 자연어 생성 모델이며, 문장 생성, 요약, 번역 등의 태스크에 활용</li>
+      <li>최근에는 sLLM을 활용한 자연어 생성 모델이 더욱 발전하고 있으며, 인간과의 대화, 콘텐츠 생성 등 다양한 응용 분야에 적용</li>
+    </ol>
+  </li>
+  <li>Transformer 모델:
+    <ol>
+      <li>GPT(Generative Pre-trained Transformer)와 BERT(Bidirectional Encoder Representations from Transformers)는 대표적인 Transformer 모델</li>
+      <li>Transformer 모델은 기존 RNN(Recurrent Neural Network) 기반 모델들과 달리 Attention 메커니즘을 사용하여 입력 간 상호 관계를 모델링 함</li>
+      <li>GPT는 언어 생성 태스크에 강점을 보이며, BERT는 다양한 자연어 이해 태스크에서 뛰어난 성능을 보임</li>
+    </ol>
+  </li>
+</ol>
+<details>
+<summary>Attention 메커니즘</summary>
+<div>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 가중치 계산
+  - 입력 데이터의 각 부분(=토큰)과 현재 처리 중인 토큰의 관련성을 계산
+  - 이를 통해 현재 처리중인 부분에 더 관련성이 높은 입력 부분에 더 큰 가중치 부여
+2. 동적 가중치 할당 (Ex.  ****기계 번역 task에서 Attention 메커니즘은 현재 번역할 단어와 입력 문장의 각 단어 간의 관련성을 동적으로 계산하여 가중치를 할당. 이를 통해 문맥에 맞는 번역을 할 수 있게 됨)
+3. 입력 데이터의 문맥적 정보를 효과적으로 활용가능
+4. 병렬 처리
+  - 입력 데이터의 모든 부분을 병렬로 처리 할 수 있어 효율적
+  - 이는 RNN과 달리 순차적 처리가 필요 없기 때문
+5. 장기 의존성 모델링
+  - 입력 데이터의 장기 의존성을 효과적으로 모델링 가능
+  - 이를 통해 문맥 정보를 더 잘 활용할 수 있어 성능 향상에 기여함
+</code></pre></div>    </div>
+  </div>
+</details>
+<details>
+<summary>RNN</summary>
+<div>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> 순환 신경망의 약자로, 시계열 데이터 처리에 특화된 인공신경망 모델
+ RNN은 언어 모델링, 기계 번역, 음성 인식 등 다양한 자연어 처리 분야에서 널리 사용되었으나, 장기 의존성 문제(Long-Term Dependency Problem)를 겪는 한계가 있음
+ 이를 극복하기 위해 등장한 것이 Transformer 모델. Transformer는 Attention 메커니즘을 사용하여 입력 간 상호 관계를 모델링하며, RNN에 비해 병렬 처리가 용이하다는 장점이 있음
+
+- RNN 특징:
+  1. 순환 구조: RNN은 순환 구조를 가지고 있어, 이전 시점의 출력이 다음 시점의 입력으로 사용. 이를 통해 시계열 데이터의 특성을 모델링 가능
+  2. 메모리 기능: RNN은 이전 시점의 정보를 메모리로 저장하고, 이를 활용하여 현재 시점의 출력을 생성. 이를 통해 시계열 데이터의 맥락 정보를 반영 가능
+  3. 가변 길이 입력/출력: RNN은 입력과 출력의 길이가 가변적일 수 있어, 다양한 길이의 시계열 데이터를 처리가능
+</code></pre></div>    </div>
+
+  </div>
+</details>
+<p><br /></p>
+
+<ol>
+  <li>VectorDataBase와 RAG(Retrieval-Augmented Generation) :
+    <ol>
+      <li>VectorDataBase는 임베딩 벡터를 저장하고 효율적으로 검색 할 수 있는 데이터 베이스 시스템</li>
+      <li>RAG는 Transformer 모델과 VectorDataBase를 결하바여 지식 검색과 생성을 동시에 수행하는 모델</li>
+      <li>RAG는 질문에 대한 답변을 생성할때 VectorDataBase에서 관련 정보를 검색하여 활용</li>
+    </ol>
+  </li>
+  <li>sLLM(Scaled Language Models):
+    <ol>
+      <li>sLLM은 최근 등장한 대규모 언어 모델(LLM) 기술로, GPT-3와 같은 기존 LLM 모델보다 더 큰 규모의 모델을 의미</li>
+      <li>sLLM은 수십억 개의 파라미터와 수조 개의 토큰으로 학습되어 더욱 강력한 성능을 가짐</li>
+      <li>sLLM은 자연어 생성, 질의응답, 추론 등 다양한 태스크에서 뛰어난 성능을 보이고 있음</li>
+    </ol>
+  </li>
+</ol>
+
+<p>Etc.</p>
+
+<ul>
+  <li>시계열(Time Series)
+    <ul>
+      <li>시계열 데이터는 시간의 흐름에 따라 순차적으로 관찰된 데이터를 의미</li>
+      <li>예를 들어, 주식 가격, 온도, 매출 데이터 등이 시간에 따라 기록된 데이터가 시계열 데이터
+시계열 데이터는 과거 정보가 현재와 미래에 영향을 미치는 특성을 가지고 있음</li>
+    </ul>
+  </li>
+  <li>신경망(Neural Network)
+    <ul>
+      <li>신경망은 인간의 뇌 구조를 모방하여 만든 기계학습 모델</li>
+      <li>신경망은 입력층, 은닉층, 출력층으로 구성되어 있으며, 각 층의 노드들이 가중치와 편향 값을 가지고 연결되어 있고 신경망은 데이터로부터 자동으로 특징을 학습하고, 복잡한 패턴을 모델링할 수 있는 장점이 있음
+대표적인 신경망 모델로는 퍼셉트론, 다층 퍼셉트론, 합성곱 신경망(CNN), 순환 신경망(RNN) 등이 있음</li>
+    </ul>
+  </li>
+  <li>LLM(Large Language Model)과 sLLM(Smaller Language Model)의 주요한 차이점
+    <ol>
+      <li>모델 크기: LLM은 수십억 개 이상의 매개변수를 가지는 거대한 규모의 언어 모델, sLLM은 LLM에 비해 매개변수의 수가 훨씬 작은 규모의 언어 모델</li>
+      <li>성능: LLM은 sLLM에 비해 일반적으로 더 높은 성능을더 가짐
+큰 데이터 세트와 컴퓨팅 자원을 활용하여 훨씬 복잡한 작업을 수행할 수 있음
+sLLM은 LLM에 비해 성능이 다소 낮지만, 특정 작업에 대해서는 LLM과 유사한 수준의 성능을 보일 수 있음</li>
+      <li>배포 및 활용: LLM은 대규모 데이터 센터에 배포되어 클라우드 기반의 API 형태로 제공되는 경우가 많음 .sLLM은 상대적으로 작은 규모이므로 개인 컴퓨터나 모바일 기기에서 로컬로 실행될 수 있음.</li>
+      <li>사용 사례: LLM은 일반적인 언어 이해 및 생성 작업에 주로 사용(대화형 챗봇, 번역, 요약 등의 작업에 활용) sLLM은 특정 도메인이나 응용 프로그램에 맞춰 최적화되어 사용됨, 예를 들어 의료 분야의 전문 지식 질의응답 등에 활용</li>
+    </ol>
+
+    <p>요약하면, LLM은 더 큰 규모와 성능을 가지지만 배포와 활용에 제약이 있는 반면, sLLM은 상대적으로 작은 규모와 성능을 가지지만 더 다양한 활용 환경에서 사용가능</p>
+  </li>
+</ul>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> 태그: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/tags/#gpt" class="page__taxonomy-item" rel="tag">GPT</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+  
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> 카테고리: </strong>
+    <span itemprop="keywords">
+    
+      
+      
+      <a href="/categories/#ai" class="page__taxonomy-item" rel="tag">AI</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#transfomer" class="page__taxonomy-item" rel="tag">Transfomer</a><span class="sep">, </span>
+    
+      
+      
+      <a href="/categories/#%EC%9E%90%EC%97%B0%EC%96%B4" class="page__taxonomy-item" rel="tag">자연어</a>
+    
+    </span>
+  </p>
+
+
+        
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> 업데이트:</strong> <time datetime="2024-08-11T00:00:00+09:00">August 11, 2024</time></p>
+
+
+      </footer>
+
+      <section class="page__share">
+  
+    <h4 class="page__share-title">공유하기</h4>
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EB%8B%A4%EC%96%91%ED%95%9C+%EC%9E%90%EC%97%B0%EC%96%B4+%EC%B2%98%EB%A6%AC+%EA%B8%B0%EC%88%A0%20http%3A%2F%2Flocalhost%3A4001%2Fai%2Ftransfomer%2F%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4%2F%25EB%258B%25A4%25EC%2596%2591%25ED%2595%259C-%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4-%25EC%25B2%2598%25EB%25A6%25AC-%25EA%25B8%25B0%25EC%2588%25A0%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4001%2Fai%2Ftransfomer%2F%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4%2F%25EB%258B%25A4%25EC%2596%2591%25ED%2595%259C-%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4-%25EC%25B2%2598%25EB%25A6%25AC-%25EA%25B8%25B0%25EC%2588%25A0%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4001%2Fai%2Ftransfomer%2F%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4%2F%25EB%258B%25A4%25EC%2596%2591%25ED%2595%259C-%25EC%259E%2590%25EC%2597%25B0%25EC%2596%25B4-%25EC%25B2%2598%25EB%25A6%25AC-%25EA%25B8%25B0%25EC%2588%25A0%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="공유하기 LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/java/%EC%BB%B4%ED%8F%AC%EC%A7%80%EC%85%98(Composition)/" class="pagination--pager" title="컴포지션(Composition)
+">이전</a>
+    
+    
+      <a href="/spring%20framework/batch/Spring-Batch/" class="pagination--pager" title="Spring Batch 기초 지식 및 아키텍쳐
+">다음</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h4 class="page__related-title">참고</h4>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/git/Git-%EB%A1%9C%EC%BB%AC-%EC%82%AD%EC%A0%9C,-%EA%B9%83-%EC%BB%A4%EB%B0%8B-%EC%95%88%ED%95%98%EA%B3%A0-%EC%A0%80%EC%9E%A5,-%EA%B9%83-%EC%A0%80%EC%9E%A5-%EC%95%88%ED%95%A8,-%EA%B9%83-%EB%B3%B5%EA%B5%AC,-Git-%EC%82%AD%EC%A0%9C-%ED%8C%8C%EC%9D%BC-%EB%B3%B5%EA%B5%AC-01/" rel="permalink">Git 로컬 삭제, 깃 커밋 안하고 저장, 깃 저장 안함, 깃 로컬 복구, Git 로컬 삭제 파일 복구, 깃 로컬 파일 복구
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">
+
+
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/jenkins/docker/kubernetes/devops/ci/cd/%EC%BB%A8%ED%85%8C%EC%9D%B4%EB%84%88/Jenkins,-Docker-%EA%B7%B8%EB%A6%AC%EA%B3%A0-Kubernetes/" rel="permalink">JenKins, Docker 그리고 Kubernetes
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">JenKins, Docker 그리고 Kubernetes 
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A7%80%ED%96%A5%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98/MSA/" rel="permalink">MSA
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">소프트웨어 아키텍처에 속하는 서비스 지향 아키텍쳐인 MSA에 대해 작성하였습니다.
+</p>
+  </article>
+</div>
+
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title no_toc" itemprop="headline">
+      
+        <a href="/spring%20framework/batch/Spring-Batch/" rel="permalink">Spring Batch 기초 지식 및 아키텍쳐
+</a>
+      
+    </h2>
+    
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 분 소요
+        
+      </span>
+    
+  </p>
+
+
+    <p class="archive__item-excerpt" itemprop="description">Spring Batch
+스프링 배치를 담당해서 업무를 한적은 없고, 기본적인 배치에 대한 지식도 없기 때문에 기초를 다질려고 작성하는 글 입니다. 😃
+퇴사하기 전에 멀티 데이터 베이스를 연결하고 Mybatis JPA로 마이그레이션을 했는데 배치로도 마이그레이션이 가능하다니.. 
+배...</p>
+  </article>
+</div>
+
+        
+      </div>
+    </div>
+  
+  
+</div>
+
+    </div>
+
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+      <li><strong>팔로우:</strong></li>
+    
+
+    
+      
+        
+          <li><a href="https://github.com/deohyunpark" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+    
+
+    <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> 피드</a></li>
+  </ul>
+</div>
+
+<div class="page__footer-copyright">&copy; 2024 deohyunpark. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'deohyunpark/deohyunpark.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    script.setAttribute('theme', 'photon-dark');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>
