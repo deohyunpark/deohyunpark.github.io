@@ -1,13 +1,14 @@
 ---
 title: 컴포지션(Composition)
 categories:
-  - java
+  - Java
 tags:
   - Composition
 toc: true
 toc_sticky: true
 toc_label: ""
 toc_icon: ""
+comments: true
 ---
 
 abstract 관련 공부를 하다 상속이 캡슐화를 깬다는 문장을 보고 검색하다가 컴포지션이 뭐지? 하고 생각하다가 작성하게 되었습니다. (의식의흐름)

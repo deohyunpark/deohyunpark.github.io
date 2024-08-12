@@ -9,6 +9,7 @@ toc: true
 toc_sticky: true
 toc_label: ""
 toc_icon: ""
+comments: true
 ---
 
 정말 오랫만에 올리는 포스팅

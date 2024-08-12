@@ -11,6 +11,7 @@ toc: true
 toc_sticky: true
 toc_label: ""
 toc_icon: ""
+comments: true
 ---
 
  `패스트 캠퍼스 강의를 듣고 공부 겸 기억하려고 작성하는 글 입니다.`<br>
