@@ -118,4 +118,10 @@ var store = [{
         "tags": ["Git 로컬 삭제","깃 커밋 안하고 저장","깃 저장 안함","깃 로컬 복구","Git 로컬 삭제 파일 복구","깃 로컬 파일 복구","깃 파일 되돌리기"],
         "url": "http://localhost:4001/git/Git-%EB%A1%9C%EC%BB%AC-%EC%82%AD%EC%A0%9C,-%EA%B9%83-%EC%BB%A4%EB%B0%8B-%EC%95%88%ED%95%98%EA%B3%A0-%EC%A0%80%EC%9E%A5,-%EA%B9%83-%EC%A0%80%EC%9E%A5-%EC%95%88%ED%95%A8,-%EA%B9%83-%EB%B3%B5%EA%B5%AC,-Git-%EC%82%AD%EC%A0%9C-%ED%8C%8C%EC%9D%BC-%EB%B3%B5%EA%B5%AC-01/",
         "teaser": null
+      },{
+        "title": "맥북 Mac 자바 버전 안바뀔 때 sdkman 으로 자바 버전 바꾸기",
+        "excerpt":"맥북 Mac 자바 버전 안바뀔 때 sdkman 으로 자바 버전 바꾸는 방법 보통은 이 방법으로 자바 버전 변경 가능합니다. # 현재 자바 버전 확인 $ java -version # 설치된 모든 자바 버전 리스트 $ /usr/libexec/java_home -V # 원하는 자바 버전으로 변경 export JAVA_HOME=$(/usr/libexec/java_home -v 17) # 예시로 17 버전 사용...","categories": ["sdkman"],
+        "tags": ["맥북","Mac","Java 버전 바꾸기","Java 버전 안바뀔 때"],
+        "url": "http://localhost:4001/sdkman/%EB%A7%A5%EB%B6%81-%EC%9E%90%EB%B0%94-%EB%B2%84%EC%A0%84-%EC%95%88%EB%B0%94%EB%80%94-%EB%95%8C/",
+        "teaser": null
       }]
